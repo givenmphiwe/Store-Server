@@ -54,15 +54,18 @@ app.get("/reviews/:id", (req, res) => {
 app.post("/reviews/:id", (req, res) => {
   try {
     const { id } = req.params;
-    const { text } = req.body;
+    const { text, ProductName, userName, starRating } = req.body;
 
-    if (!text) {
+    if (!starRating) {
       return res.status(400).json({ error: "Review text is required" });
     }
 
     const reviews = readReviews();
     const newReview = {
+      userName,
       text,
+      ProductName,
+      starRating,
       date: new Date().toISOString(),
     };
 
@@ -77,8 +80,6 @@ app.post("/reviews/:id", (req, res) => {
     res.status(500).json({ error: "Failed to add review" });
   }
 });
-
-
 
 // The payment of the product
 
